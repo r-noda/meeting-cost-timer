@@ -1,8 +1,7 @@
-# Meeting Cost Timer
-
+# 会議のコスト算出タイマー
 会議にかかる人件費をリアルタイムで可視化するWebアプリです。
 
-## Demo
+## リンク
 https://www.rnoda-studio.com/meeting-cost-timer/
 
 ## イメージ画像
