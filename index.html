@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>会議のコスト算出タイマー</title>
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+<body>
+    <div class="container">
+
+        <h1 class="mainTitlte">会議のコストタイマー</h1>
+        <div id="stopwatch">00:00:00</div>
+        <div id="timer" class="invisible">
+            <button class="shadow" id="start">スタート</button>
+            <button class="shadow" id="stop">ストップ</button>
+            <button class="shadow" id="reset">リセット</button>
+        </div>
+        <div class="textWrapper">
+
+            <p>この会議の合計コスト<span id="totalCost">0000</span>円</p>
+            <p>１分あたりのコスト<span id="minuteCost">0000</span>円</p>
+            <p>出席者の時給の合計<span id="totalHourlyWage">0000</span>円</p>
+            <p class="memberTop invisible">出席者の時給一覧</p>
+            <button type="button" id="addMember" class="shadow">会議の出席者を追加</button>
+            <div id="members">
+                <div class="member">
+                    時給: <input class="hourlyWageInput" type="number">
+                    <button type="button" class="delete shadow">削除</button>
+                </div>
+                <div class="member">
+                    時給: <input class="hourlyWageInput" type="number">
+                    <button type="button" class="delete shadow">削除</button>
+                </div>
+            </div>
+
+            <button type="button" id="confirmMembers" class="shadow">出席者を確定</button>
+
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+
+</body>
+</html>
