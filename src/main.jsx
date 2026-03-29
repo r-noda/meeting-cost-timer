@@ -1,7 +1,7 @@
 import "../src/style/style.css";
 import { createRoot } from "react-dom/client";
 import { useState, useEffect } from 'react';
-import Timer from "./Timer/timer";
+import Timer from "./Timer/Timer";
 // 新しく作成するコンポーネント（後述）
 import MemberList from "./Member/MemberList";
 import StandardButton from "./Button/StandardButton";
