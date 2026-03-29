@@ -14,14 +14,16 @@ https://www.rnoda-studio.com/meeting-cost-timer/
 
 ## 特徴
 ・出席者の時給入力  
-・1分あたりの会議コスト計算  
-・タイマー機能  
-・リアルタイムコスト表示  
+・1分あたりの会議コスト計算
+・タイマー機能
+・リアルタイムコスト表示
+・会議出席者の保存機能
 
 ## 使用した言語
-HTML  
-CSS  
-JavaScript  
+HTML
+CSS
+JavaScript
+React
 
 ## 作者
 Ryota Noda
