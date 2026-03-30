@@ -21,6 +21,7 @@ body {
 @media (max-width: 768px) {
   .container {
     width: calc(100% - 30px);
+    height: calc(100vh - 15px);
   }
 }
 h1 {
