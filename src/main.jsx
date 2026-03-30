@@ -8,7 +8,7 @@ import StandardButton from "./Button/StandardButton";
 
 export const Contents = () => {
     // --- State管理 ---
-    const [members, setMember] = useState([{ id: 1, wage: 0 }, { id: 2, wage: 0 }]);
+    const [members, setMember] = useState([{ id: 1, name:"", wage: 0 }, { id: 2, name:"", wage: 0 }]);
     const [totalWage, setTotalWage] = useState(0);
     const [isConfirmed, setIsConfirmed] = useState(false);
     const [seconds, setSeconds] = useState(0);
@@ -49,7 +49,8 @@ export const Contents = () => {
 
         // --- ここからはReactの流儀 ---
         const wagesToSave = members.map(m => m.wage);
-        const newTeam = { name: teamName, wages: wagesToSave };
+        const namesToSave = members.map(m => m.name);
+        const newTeam = { name: teamName, memberName: namesToSave, wages: wagesToSave };
 
         // すでに存在するか再度チェックして分岐更新
         const exists = teamList.find(t => t.name === teamName);
@@ -84,16 +85,19 @@ export const Contents = () => {
         if (!selectedName) return;
 
         const targetTeam = teamList.find(t => t.name === selectedName);
-        if (targetTeam) {
-            // 時給リストを members ステートの形式に変換して復元
-            const restoredMembers = targetTeam.wages.map((w, index) => ({
-                id: Date.now() + index, // 新しいユニークIDを付与
-                wage: w
+        
+        if (targetTeam && targetTeam.memberName && targetTeam.wages) {
+            // targetTeam.memberName をベースに、同じ index の時給を組み合わせて復元
+            const restoredMembers = targetTeam.memberName.map((name, index) => ({
+                id: Date.now() + index,    // ユニークなIDを付与
+                name: name,                // 名前配列から取得
+                wage: targetTeam.wages[index] || 0, // 時給配列の同じ位置から取得（なければ0）
             }));
-            setMember(restoredMembers);
+
+            setMember(restoredMembers); // 画面に表示するメンバーリストを更新
         }
     };
-    
+
     // メンバーを追加
     const additionMember = () => {
         setMember([...members, { id: Date.now(), wage: 0 }]);
@@ -105,8 +109,13 @@ export const Contents = () => {
     };
     
     // メンバーの時給を入力
-    const updateWage = (id, value) => {
-        setMember(members.map((m) => m.id === id ? { ...m, wage: value } : m));
+    const updateWage = (id, field, value) => {
+        setMember(members.map(member => 
+            // IDが一致するメンバーだけを更新
+            member.id === id 
+            ? { ...member, [field]: field === "wage" ? Number(value) : value } 
+            : member
+        ));
     };
 
     // メンバーを確定
@@ -121,6 +130,14 @@ export const Contents = () => {
         setTotalWage(total);
         setIsConfirmed(true);
     };
+
+    const handleFinish = () => {
+        if (window.confirm("会議を終了してメニューに戻りますか？（計測はリセットされます）")) {
+            setIsConfirmed(false);
+            // ここでタイマーをストップさせたり、
+            // データを保存する処理を呼ぶとさらに完璧です！
+        }
+    }
 
     // --- タイマーロジック ---
     useEffect(() => {
@@ -155,9 +172,9 @@ export const Contents = () => {
                 <>
                     <Timer>{formatTime(seconds)}</Timer>
                     <div id="timer">
-                        <button className="shadow" id="start" onClick={() => setIsActive(true)}>スタート</button>
-                        <button className="shadow" id="stop" onClick={() => setIsActive(false)}>ストップ</button>
-                        <button className="shadow" id="reset" onClick={() => { setIsActive(false); setSeconds(0); }}>リセット</button>
+                        <StandardButton className="shadow" id="start" onClick={() => setIsActive(true)}>スタート</StandardButton>
+                        <StandardButton className="shadow" id="stop" onClick={() => setIsActive(false)}>ストップ</StandardButton>
+                        <StandardButton className="shadow" id="reset" onClick={() => { setIsActive(false); setSeconds(0); }}>リセット</StandardButton>
                     </div>
                     <div className="costInfo">
                         <p>この会議の合計コスト<span id="totalCost">{currentCost}</span>円</p>
@@ -185,8 +202,7 @@ export const Contents = () => {
 
                 {!isConfirmed && (
                     <div className="setupControls">
-                        <StandardButton id="save" onClick={handleSaveTeam}>現在の出席者を保存</StandardButton>
-                        
+                        <StandardButton id="save" onClick={handleSaveTeam}>現在の出席者を保存</StandardButton>                        
                         <select id="teamSelect" onChange={handleSelectTeam} className="shadow">
                             <option value="">保存したチームを読み込む</option>
                             {teamList.map((team, index) => (
@@ -203,6 +219,9 @@ export const Contents = () => {
                             <StandardButton id="delete" onClick={deleteSelectedTeam} disabled={!deleteTeam}>削除</StandardButton>
                         </div>
                     </div>
+                )}
+                {isConfirmed && (
+                    <StandardButton id="finish" onClick={handleFinish} >会議を終了する</StandardButton>
                 )}
             </div>
         </div>
