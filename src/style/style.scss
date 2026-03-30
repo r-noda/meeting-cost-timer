@@ -10,12 +10,19 @@ body {
 }
 
 .container {
-    max-width: 600px;
+    // max-width: 600px;
+    max-width: 1200px;
     margin: auto;
     background: white;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: calc(100% - 30px);
+    }
 }
 
 h1 {
@@ -107,6 +114,12 @@ button,#teamSelect,#deleteTeamSelect {
 #reset {
     background: #9e9e9e;
     color: white;
+}
+
+#finish {
+    background: #9e9e9e;
+    color: white;
+    margin: auto;
 }
 
 #addMember {
