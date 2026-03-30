@@ -18,9 +18,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     @media screen and (max-width: 768px) {
-        border-color: red;
-
-        width: calc(100% - 30px);
+        width: calc(100% - 20px);
         height: calc(100vh - 15px);
     }
 }
@@ -166,7 +164,11 @@ button,#teamSelect,#deleteTeamSelect {
     align-items: center;
     gap: 10px;
     margin-bottom: 10px;
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+    }
 }
+
 
 .member input {
     width: 120px;
