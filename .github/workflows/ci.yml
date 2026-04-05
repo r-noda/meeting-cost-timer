@@ -1,0 +1,25 @@
+name: CI Check
+
+on:
+  push:
+    branches: [ "main" ] # mainブランチに保存した時に実行
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4 # コードを取得
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Nodeのバージョン指定
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install # ライブラリをインストール
+        
+      - name: Build check
+        run: npm run build # ビルドが通るかテスト！
